@@ -20,6 +20,11 @@ class Object
   def sassert(bool, message = "Assertion failed")
     if $DEBUG
       raise AssertionFailure.new(message) unless bool
+    else
+      if(!bool)
+        stderr.printf("Assertion failed: " + message.to_s + "\n")
+        stderr.printf("at: " + caller.to_s + "\n")
+      end
     end
   end
   
