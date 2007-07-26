@@ -1,5 +1,11 @@
+require 'rubygems'
 require 'test/unit'
 require File.dirname(__FILE__) + "/../lib/simpleassert"
+
+if(File.exists?('test/tesly_reporter.rb'))
+  printf('Continue with tesly\n')
+  require 'test/tesly_reporter'
+end
 
 # Test the simple assert facility
 class SimpleAssertTest < Test::Unit::TestCase
