@@ -1,6 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/gempackagetask'
+require 'rake/rdoctask'
 
 # Runs the test suite
 Rake::TestTask.new do |task|
@@ -24,3 +25,10 @@ end
 Rake::GemPackageTask.new(gem_spec) do |pkg|
   pkg.need_tar = true
 end
+
+Rake::RDocTask.new do |rdoc|
+  rdoc.rdoc_files.include("lib/**/*rb")
+  rdoc.rdoc_dir = ENV['CC_BUILD_ARTIFACTS'] + '/rdoc' if(ENV['CC_BUILD_ARTIFACTS'])
+end
+
+task :cruise => ['test', 'rdoc']
