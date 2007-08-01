@@ -31,4 +31,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = ENV['CC_BUILD_ARTIFACTS'] + '/rdoc' if(ENV['CC_BUILD_ARTIFACTS'])
 end
 
-task :cruise => ['test', 'rdoc']
+task :cruise <= ['test', 'rdoc']
