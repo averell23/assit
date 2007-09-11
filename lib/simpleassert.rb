@@ -35,6 +35,9 @@ class Object
   
   # Assert if something is of the right type
   def sassert_type(object, klass, message = "Object of wrong type")
-    sassert(object.kind_of?(klass), message)
+    if(!object.kind_of?(klass))
+      message += " expected #{klass} but was #{object.class}"
+      sassert(false, message)
+    end
   end
 end
