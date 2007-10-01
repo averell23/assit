@@ -11,6 +11,7 @@ end
 class SimpleAssertTest < Test::Unit::TestCase
   def setup
     @@debug_old = $DEBUG # save the debug mode
+    $DEBUG = true
   end
   
   def teardown
@@ -19,7 +20,6 @@ class SimpleAssertTest < Test::Unit::TestCase
   
   # Tests the basic assert facility
   def test_assert
-    $DEBUG = true
     sassert(true)
     assert_raise(AssertionFailure) { sassert(false, "boing") }
     $DEBUG = false
@@ -27,8 +27,7 @@ class SimpleAssertTest < Test::Unit::TestCase
   end
   
   # Test nil assert
-  def test_assert__not_nil
-    $DEBUG = true
+  def test_assert_not_nil
     not_nil = "xxx"
     sassert_not_nil(not_nil, "message")
     assert_raise(AssertionFailure) { sassert_not_nil(nil) }
@@ -36,13 +35,18 @@ class SimpleAssertTest < Test::Unit::TestCase
   
   # Test type assert
   def test_assert_type
-    $DEBUG = true
     my_string = String.new
     my_hash = Hash.new
     
     sassert_type(my_string, Object)
     sassert_type(my_string, String, "message")
     assert_raise(AssertionFailure) { sassert_type(my_hash, String, "message") }
+  end
+  
+  # Test equality assert
+  def test_assert_equal
+    sassert_equal(1, 1)
+    assert_raise(AssertionFailure) { sassert_equal(0, 1) }
   end
   
 end

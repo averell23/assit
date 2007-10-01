@@ -22,8 +22,8 @@ class Object
       raise AssertionFailure.new(message) unless bool
     else
       if(!bool)
-        $stderr.printf("Assertion failed: " + message.to_s + "\n")
-        $stderr.printf("at: " + caller.to_s + "\n")
+        $stderr.puts("Assertion failed: " + message.to_s)
+        $stderr.puts("at: " + caller.to_s)
       end
     end
   end
@@ -31,6 +31,14 @@ class Object
   # Assert if an object is not nil
   def sassert_not_nil(object, message = "Object is nil")
     sassert(object != nil, message)
+  end
+  
+  # Assert if two objects are equal
+  def sassert_equal(expected, actual, message = "Object expected to be equal")
+    if(expected != actual)
+      message += " expected #{expected} but was #{actual}"
+      sassert(false, message)
+    end
   end
   
   # Assert if something is of the right type
