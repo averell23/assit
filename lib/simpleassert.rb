@@ -48,4 +48,10 @@ class Object
       sassert(false, message)
     end
   end
+  
+  protected 
+  
+  def debug
+    @@debug = $DEBUG || (ENV['RAILS_ENV'] && ENV['RAILS_ENV'] != 'production')
+  end
 end
