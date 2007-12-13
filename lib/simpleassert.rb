@@ -19,7 +19,9 @@ class Object
   # Standard assert
   def sassert(bool, message = "Assertion failed")
     if(debug)
-      raise AssertionFailure.new(message) unless bool
+      if(!bool)
+        raise AssertionFailure.new("ASSERT: #{message}")
+      end
     else
       if(!bool)
         $stderr.puts("Assertion failed: " + message.to_s)
