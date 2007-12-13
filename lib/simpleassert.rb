@@ -18,7 +18,7 @@ class Object
   
   # Standard assert
   def sassert(bool, message = "Assertion failed")
-    if $DEBUG
+    if(debug)
       raise AssertionFailure.new(message) unless bool
     else
       if(!bool)
@@ -52,6 +52,12 @@ class Object
   protected 
   
   def debug
-    @@debug = $DEBUG || (ENV['RAILS_ENV'] && ENV['RAILS_ENV'] != 'production')
+    # Little tricky, because we cant use ||= to assign a value of 'false' only
+    # one time
+    @@debug_defined ||= defined?(@debug)
+    unless(@@debug_defined)
+      @@debug = $DEBUG || (ENV['RAILS_ENV'] && ENV['RAILS_ENV'] != 'production')
+    end
+    @@debug
   end
 end
