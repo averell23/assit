@@ -10,13 +10,13 @@ end
 
 # Packages the gem
 gem_spec = Gem::Specification.new do |spec|
-  spec.name = "simpleassert"
-  spec.version = "0.0.2"
+  spec.name = "assit"
+  spec.version = "0.0.1"
   spec.author = "Daniel Hahn"
   spec.email = "dhahn@gmx.de"
   spec.homepage = "http://talia.discovery-project.eu/"
   spec.platform = Gem::Platform::RUBY
-  spec.summary = "Semantic Naming Extensions for Talia and others"
+  spec.summary = "An assertion framework for Ruby"
   spec.files = FileList["{lib}/**/*"].to_a
   spec.require_path = "lib"
   spec.test_files = FileList["{test}/**/*test.rb"].to_a
