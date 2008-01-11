@@ -17,9 +17,39 @@ module Assit
     end
 
     # Assert if something is of the right type
-    def assit_type(object, klass, message = "Object of wrong type")
+    def assit_kind_of(klass, object, message = "Object of wrong type")
       if(!object.kind_of?(klass))
         message += " expected #{klass} but was #{object.class}"
+        assit(false, message)
+      end
+    end
+    
+    # Fails the assertion
+    def assit_fail(message = "Assertion with assit_fail")
+      assit(false, message)
+    end
+    
+    # Duck typing assertion: This checks if the given object responds to the
+    # given method calls. This won't detect any calls that will be handled
+    # through method_missing, of course.
+    #
+    # Methods can be a single method name, or an Enumerable with multiple names
+    def assit_quack(object, methods, message = "Quack assert failed.")
+      unless(methods.kind_of?(Enumerable))
+        methods = [methods]
+      end
+      
+      methods.each do |method|
+        unless(object.respond_to?(method.to_sym))
+          assit(false, "#{message} - Method: #{method.to_s}")
+        end
+      end
+    end
+    
+    # Asserts that the given element is a string that is not nil and not an
+    # empty string, or a string only containing whitspaces
+    def assit_real_string(object, message = "Not a non-empty string.")
+      unless(object && object.kind_of?(String) && object.strip != "")
         assit(false, message)
       end
     end

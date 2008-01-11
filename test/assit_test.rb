@@ -10,6 +10,15 @@ if(File.exists?(File.dirname(__FILE__) + '/tesly_reporter.rb'))
   require File.dirname(__FILE__) + '/tesly_reporter'
 end
 
+# Helper class for the duck typing assertion
+class QuackClass
+  def quack
+  end
+  
+  def moo
+  end
+end
+
 # Test the simple assert facility
 class AssitTest < Test::Unit::TestCase
   
@@ -27,19 +36,33 @@ class AssitTest < Test::Unit::TestCase
   end
   
   # Test type assert
-  def test_assert_type
+  def test_assert_kind_of
     my_string = String.new
     my_hash = Hash.new
     
-    assit_type(my_string, Object)
-    assit_type(my_string, String, "message")
-    assert_raise(Assit::AssertionFailure) { assit_type(my_hash, String, "message") }
+    assit_kind_of(Object, my_string)
+    assit_kind_of(String, my_string, "message")
+    assert_raise(Assit::AssertionFailure) { assit_kind_of(String, my_hash, "message") }
   end
   
   # Test equality assert
   def test_assert_equal
     assit_equal(1, 1)
     assert_raise(Assit::AssertionFailure) { assit_equal(0, 1) }
+  end
+  
+  # Test fail 
+  def test_assert_fail
+    assert_raise(Assit::AssertionFailure) { assit_fail }
+  end
+  
+  # Test the duck typing assertions
+  def test_assert_quack
+    object_duck = QuackClass.new
+    assit_quack(object_duck, :quack)
+    assit_quack(object_duck, [:quack, :moo])
+    assit_quack(object_duck, :moo, "test")
+    assert_raise(Assit::AssertionFailure) { assit_quack(object_duck, :growl) }
   end
   
 end
