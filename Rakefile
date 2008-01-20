@@ -1,7 +1,16 @@
+require 'meta_project'
 require 'rake'
 require 'rake/testtask'
+require 'rake/clean'
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
+require 'rake/contrib/xforge'
+
+$name = 'assit'
+$version = '0.0.2'
+$distdir = "#{$name}-#{$version}"
+
+CLEAN.include("pkg", "lib/*.bundle", "html", "*.gem", ".config")
 
 # Runs the test suite
 Rake::TestTask.new do |task|
@@ -10,16 +19,19 @@ end
 
 # Packages the gem
 gem_spec = Gem::Specification.new do |spec|
-  spec.name = "assit"
-  spec.version = "0.0.1"
+  spec.name = $name
+  spec.version = $version
   spec.author = "Daniel Hahn"
   spec.email = "dhahn@gmx.de"
-  spec.homepage = "http://talia.discovery-project.eu/"
-  spec.platform = Gem::Platform::RUBY
   spec.summary = "An assertion framework for Ruby"
+  spec.description = "This is an assertion framework for Ruby."
+  spec.homepage = "http://assit.rubyforge.org"  
+  spec.platform = Gem::Platform::RUBY
   spec.files = FileList["{lib}/**/*"].to_a
   spec.require_path = "lib"
   spec.test_files = FileList["{test}/**/*test.rb"].to_a
+  spec.rubyforge_project = 'assit'
+  spec.has_rdoc = true
 end
 
 Rake::GemPackageTask.new(gem_spec) do |pkg|
@@ -28,8 +40,44 @@ end
 
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include("lib/**/*rb")
-  rdoc.title    = 'Simple Assert'
+  rdoc.rdoc_files.include('LICENSE', 'README')
+  rdoc.main = "README"
+  rdoc.title = "Assit documentation"
   rdoc.options << '--line-numbers' << '--inline-source'
+end
+
+task :verify_rubyforge do
+  raise "RUBYFORGE_USER environment variable not set!" unless ENV['RUBYFORGE_USER']
+  raise "RUBYFORGE_PASSWORD environment variable not set!" unless ENV['RUBYFORGE_PASSWORD']
+end
+
+desc "release #$name-#$version gem on RubyForge"
+task :release => [ :clean, :verify_rubyforge, :package ] do
+  $project  = MetaProject::Project::XForge::RubyForge.new('assit')
+  release_files = FileList["pkg/#$distdir.gem"]
+  Rake::XForge::Release.new($project) do |release|
+    release.user_name     = ENV['RUBYFORGE_USER']
+    release.password      = ENV['RUBYFORGE_PASSWORD']
+    release.files         = release_files.to_a
+    release.release_name  = "#$name #$version"
+    release.package_name  = "assit"
+    release.release_notes = ""
+    
+    changes = []
+    File.open("CHANGELOG") do |file|
+      current = true
+      
+      file.each do |line|
+        line.chomp!
+        if current and line =~ /^==/
+          current = false; next
+        end
+        break if line.empty? and not current
+        changes << line
+      end
+    end
+    release.release_changes = changes.join("\n")
+  end
 end
 
 task :cruise => ['test', 'rdoc']
