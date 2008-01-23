@@ -19,7 +19,7 @@ module Assit
     # Assert if something is of the right type
     def assit_kind_of(klass, object, message = "Object of wrong type")
       if(!object.kind_of?(klass))
-        message += " expected #{klass} but was #{object.class}"
+        message += " (Expected #{klass} but was #{object.class})"
         assit(false, message)
       end
     end
