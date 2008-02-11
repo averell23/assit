@@ -5,7 +5,7 @@ but it's already useful.
 
 Getting started is real easy: Once you have installed assit, you just have
 to <tt>require 'assit'</tt> and start using assertions in your code, e.g. 
-<tt>assit(some_codition)</tt>
+<tt>assit { some_codition }</tt>
 
 Assertions are directly available in each object; the name of the assertion
 methods start with 'assit', in order not to conflict with the unit testing
@@ -16,6 +16,16 @@ To get a list of the Assertion methods, see Assit::Assertions.
 
 The assertions are part of the <tt>Object</tt> class by design, to make them
 really easy to use.
+
+=== Simple Assertions
+
+The simple #assit takes a simple boolean parameter, that checks if the 
+assertion is true or false.
+
+However, if you use a complex expression for your assertion (like: 
+<tt>assit(complex_expression)</tt> you should prefer the 
+<tt>assit_block { complex_expression } syntax. In this case the 
+<tt>complex_expression</tt> will also be disabled when you disable the assertions.
 
 == Failed assertions
 

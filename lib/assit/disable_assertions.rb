@@ -3,7 +3,7 @@
 class Object
   
   # The base assertion is the NOP 
-  def assit(*params) # :nodoc:
+  def assit(*params, &block) # :nodoc:
   end
   
   # Now create an alias for each assertion

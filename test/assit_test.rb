@@ -65,4 +65,14 @@ class AssitTest < Test::Unit::TestCase
     assert_raise(Assit::AssertionFailure) { assit_quack(object_duck, :growl) }
   end
   
+  # Test the block assertion
+  def test_assert_block
+    assit_block { true }
+  end
+  
+  # Test the block assertions failure
+  def test_assert_block_fail
+    assert_raise(Assit::AssertionFailure) { assit_block { 'foo' == 'bar' } }
+  end
+  
 end
