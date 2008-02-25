@@ -1,10 +1,10 @@
 # Loads the Assit framework and configures it
-require 'config.rb'
+require 'assit_config.rb'
 
 # Do the configuration
-Assit::Config::do_config!
+AssitConfig::do_config!
 
-if(Assit::Config.disabled?)
+if(AssitConfig.disabled?)
   require 'disable_assertions'
 else
   require 'setup_assertions'

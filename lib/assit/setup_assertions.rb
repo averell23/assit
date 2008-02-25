@@ -5,7 +5,7 @@ class Object
   # The main assertion method
   def assit(bool, message = "Assertion failed.")
     unless(bool)
-      Assit::Config::action.assert_it(message)
+      AssitConfig::action.assert_it(message)
     end
   end
   
