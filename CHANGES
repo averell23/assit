@@ -3,3 +3,7 @@
 == Version 0.0.2
 
 First public release
+
+== Version 0.0.3
+
+Fixed the loader so that configuration through the API works correctly. Added debug action.
