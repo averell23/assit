@@ -4,6 +4,11 @@
 
 First public release
 
+* No changes
+
 == Version 0.0.3
 
-Fixed the loader so that configuration through the API works correctly. Added debug action.
+Minor updates
+
+* Fixed the loader so that configuration through the API works correctly. 
+* Added debug action.

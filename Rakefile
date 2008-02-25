@@ -7,8 +7,7 @@ require 'rake/rdoctask'
 require 'rake/contrib/xforge'
 
 $name = 'assit'
-$version = '0.0.2'
-$distdir = "#{$name}-#{$version}"
+$version = '0.0.3'
 
 CLEAN.include("pkg", "lib/*.bundle", "html", "*.gem", ".config")
 
@@ -54,29 +53,14 @@ end
 desc "release #$name-#$version gem on RubyForge"
 task :release => [ :clean, :verify_rubyforge, :package ] do
   $project  = MetaProject::Project::XForge::RubyForge.new('assit')
-  release_files = FileList["pkg/#$distdir.gem"]
+  release_files = FileList["pkg/#$name-#$version.gem", "CHANGES"]
   Rake::XForge::Release.new($project) do |release|
     release.user_name     = ENV['RUBYFORGE_USER']
     release.password      = ENV['RUBYFORGE_PASSWORD']
     release.files         = release_files.to_a
     release.release_name  = "#$name #$version"
     release.package_name  = "assit"
-    release.release_notes = ""
-    
-    changes = []
-    File.open("CHANGELOG") do |file|
-      current = true
-      
-      file.each do |line|
-        line.chomp!
-        if current and line =~ /^==/
-          current = false; next
-        end
-        break if line.empty? and not current
-        changes << line
-      end
-    end
-    release.release_changes = changes.join("\n")
+    release.version       = $version
   end
 end
 
