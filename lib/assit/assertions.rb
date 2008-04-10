@@ -11,7 +11,7 @@ module Assit
     # Assert if two objects are equal
     def assit_equal(expected, actual, message = "Object expected to be equal")
       if(expected != actual)
-        message += " expected #{expected} but was #{actual}"
+        message << " expected #{expected} but was #{actual}"
         assit(false, message)
       end
     end
@@ -19,7 +19,7 @@ module Assit
     # Assert if something is of the right type
     def assit_kind_of(klass, object, message = "Object of wrong type")
       if(!object.kind_of?(klass))
-        message += " (Expected #{klass} but was #{object.class})"
+        message << " (Expected #{klass} but was #{object.class})"
         assit(false, message)
       end
     end
