@@ -57,8 +57,12 @@ module Assit
     # Executes the given block and asserts if the result is true. This allows
     # you to assert on complex, custom expressions and be able to disable
     # those expressions together with the assertions. See the README for more.
-    def assit_block(message = "Assertion failed.", &block)
-      assit(block.call, message)
+    #
+    # The block will be passed a single array, to which error messages can be
+    # append.
+    def assit_block(&block)
+      errors = []
+      assit(block.call(errors), errors.join(', '))
     end 
     
   end

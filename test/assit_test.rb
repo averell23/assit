@@ -75,4 +75,16 @@ class AssitTest < Test::Unit::TestCase
     assert_raise(Assit::AssertionFailure) { assit_block { 'foo' == 'bar' } }
   end
   
+  # Test block assertion error messages
+  def test_asser_block_message
+    assert_raise(Assit::AssertionFailure) do
+      begin
+        assit_block { |errors| errors << 'message'; false }
+      rescue Assit::AssertionFailure => e
+        assert('message', e.message)
+        raise
+      end
+    end
+  end
+  
 end
