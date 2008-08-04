@@ -59,10 +59,11 @@ module Assit
     # those expressions together with the assertions. See the README for more.
     #
     # The block will be passed a single array, to which error messages can be
-    # append.
+    # append. The assertion will always fail if an error is appended to the
+    # array.
     def assit_block(&block)
       errors = []
-      assit(block.call(errors), errors.join(', '))
+      assit((block.call(errors) && errors.size == 0), errors.join(', '))
     end 
     
   end
