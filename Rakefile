@@ -16,8 +16,8 @@ end
 
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include("lib/**/*rb")
-  rdoc.rdoc_files.include('LICENSE', 'README')
-  rdoc.main = "README"
+  rdoc.rdoc_files.include('LICENSE', 'README.rdoc')
+  rdoc.main = "README.rdoc"
   rdoc.title = "Assit documentation"
   rdoc.options << '--line-numbers' << '--inline-source'
 end
@@ -30,6 +30,7 @@ Jeweler::Tasks.new do |s|
   s.homepage = "http://averell23.github.com/assit"
   s.description = "Lightweight library that provides easy-to-use runtime assertions for Ruby"
   s.authors = ["Daniel Hahn"]
+  s.extra_rdoc_files = ["README.rdoc", "CHANGES", "LICENSE"]
 end
 
 
