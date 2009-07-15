@@ -31,6 +31,7 @@ Jeweler::Tasks.new do |s|
   s.description = "Lightweight library that provides easy-to-use runtime assertions for Ruby"
   s.authors = ["Daniel Hahn"]
   s.extra_rdoc_files = ["README.rdoc", "CHANGES", "LICENSE"]
+  s.files = FileList["{lib,test}/**/*"]
 end
 
 
