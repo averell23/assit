@@ -1,0 +1,47 @@
+Assit is a small and simple assertion framework for Ruby. It's not yet grown up,
+but it's already useful.
+
+== Getting Started
+
+Getting started is real easy: Once you have installed assit, you just have
+to <tt>require 'assit'</tt> and start using assertions in your code, e.g. 
+<tt>assit { some_codition }</tt>
+
+Assertions are directly available in each object; the name of the assertion
+methods start with 'assit', in order not to conflict with the unit testing
+assertions. There are several <tt>assit_*</tt> methods and if applicable they
+will behave like their counterparts in the unit testing framework.
+
+To get a list of the Assertion methods, see Assit::Assertions.
+
+The assertions are part of the <tt>Object</tt> class by design, to make them
+really easy to use.
+
+=== Simple Assertions
+
+The simple #assit takes a simple boolean parameter, that checks if the 
+assertion is true or false.
+
+However, if you use a complex expression for your assertion (like: 
+<tt>assit(complex_expression)</tt> you should prefer the 
+<tt>assit_block { complex_expression } syntax. In this case the 
+<tt>complex_expression</tt> will also be disabled when you disable the assertions.
+
+== Failed assertions
+
+If an assertion fails, some kind of action will be taken - e.g. an exception
+will be raised, or something will be printed to stdout. You can configure
+the action; if you don't assit will try and use a method that is useful in
+most cases. You can also disable assertions completely. In this case, no checks
+will be done and the overhead during runtime will be minimal.
+See the documentation of the Assit::Config module for more information.
+
+== Why assertions?
+
+Assertions allow you to test your code for errors during runtime. This is 
+especially helpful for Ruby, since it doesn't have any compile-time check. 
+Often a few well-placed assertions can save you a lot of debbuging trouble.
+
+Assertions should check for conditions in the code that indicate '''programming
+errors'''. They are not meant to check for error conditions, nor are they a
+replacement for unit tests.

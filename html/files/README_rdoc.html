@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Tue Jul 14 15:07:02 +0200 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="../classes/Assit.html">Assit</a> is a small and simple assertion
+framework for Ruby. It&#8216;s not yet grown up, but it&#8216;s already
+useful.
+</p>
+<h2>Getting Started</h2>
+<p>
+Getting started is real easy: Once you have installed assit, you just have
+to <tt>require &#8216;assit&#8216;</tt> and start using assertions in your
+code, e.g. <tt>assit { some_codition }</tt>
+</p>
+<p>
+Assertions are directly available in each object; the name of the assertion
+methods start with &#8216;assit&#8217;, in order not to conflict with the
+unit testing assertions. There are several <tt>assit_*</tt> methods and if
+applicable they will behave like their counterparts in the unit testing
+framework.
+</p>
+<p>
+To get a list of the Assertion methods, see <a
+href="../classes/Assit/Assertions.html">Assit::Assertions</a>.
+</p>
+<p>
+The assertions are part of the <tt><a
+href="../classes/Object.html">Object</a></tt> class by design, to make them
+really easy to use.
+</p>
+<h3>Simple Assertions</h3>
+<p>
+The simple assit takes a simple boolean parameter, that checks if the
+assertion is true or false.
+</p>
+<p>
+However, if you use a complex expression for your assertion (like:
+<tt>assit(complex_expression)</tt> you should prefer the <tt>assit_block {
+complex_expression } syntax. In this case the
+&lt;tt&gt;complex_expression</tt> will also be disabled when you disable
+the assertions.
+</p>
+<h2>Failed assertions</h2>
+<p>
+If an assertion fails, some kind of action will be taken - e.g. an
+exception will be raised, or something will be printed to stdout. You can
+configure the action; if you don&#8216;t assit will try and use a method
+that is useful in most cases. You can also disable assertions completely.
+In this case, no checks will be done and the overhead during runtime will
+be minimal. See the documentation of the Assit::Config module for more
+information.
+</p>
+<h2>Why assertions?</h2>
+<p>
+Assertions allow you to test your code for errors during runtime. This is
+especially helpful for Ruby, since it doesn&#8216;t have any compile-time
+check. Often a few well-placed assertions can save you a lot of debbuging
+trouble.
+</p>
+<p>
+Assertions should check for conditions in the code that indicate
+&#8217;&#8217;&#8216;programming errors&#8217;&#8217;&#8217;. They are not
+meant to check for error conditions, nor are they a replacement for unit
+tests.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

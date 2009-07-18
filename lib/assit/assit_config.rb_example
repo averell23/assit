@@ -1,0 +1,8 @@
+# Configuration file for the Assit framework
+module Assit
+  # Set to true to completely disable the framework
+  assit_disabled false
+
+  # Sets the action to use when an assert fails
+  assit_action :raise
+end

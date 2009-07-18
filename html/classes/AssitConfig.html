@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: AssitConfig</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">AssitConfig</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/assit_config_rb.html">
+                lib/assit_config.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Helper module for the configuration Ths is used to load the <a
+href="Assit.html">Assit</a> module. The following configuration options
+exist:
+</p>
+<ul>
+<li><a href="AssitConfig.html#M000012">assit_disabled</a> - If set it will
+completely disable the assertions
+
+</li>
+<li><a href="AssitConfig.html#M000015">assit_action</a> - Selects the <a
+href="AssitConfig.html#M000014">action</a> that will be executed if the
+assert fails
+
+</li>
+</ul>
+<p>
+The <a href="Assit.html">Assit</a> framework can be configured through
+environment variables or a config file (assit_config.rb) in the current
+load path.
+</p>
+<p>
+If environment variables are used, the should have ALL UPPERCASE names, as
+ASSIT_DISABLED and ASSIT_ACTION.
+</p>
+<p>
+Environment variables take precedence over the config file.
+</p>
+<p>
+If no configuration is given, the module is configured automatically:
+</p>
+<p>
+A Rails installation run in &#8216;production&#8217; mode will have the
+assertions disabled.
+</p>
+<p>
+A Rails installation in the other modes will use :raise as the default <a
+href="AssitConfig.html#M000014">action</a>.
+</p>
+<p>
+Other scripts will use :raise if the $DEBUG flag is set, otherwise :log is
+used as the default <a href="AssitConfig.html#M000014">action</a>
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000014">action</a>&nbsp;&nbsp;
+      <a href="#M000015">assit_action</a>&nbsp;&nbsp;
+      <a href="#M000012">assit_disabled</a>&nbsp;&nbsp;
+      <a href="#M000017">auto_action</a>&nbsp;&nbsp;
+      <a href="#M000018">auto_disable</a>&nbsp;&nbsp;
+      <a href="#M000019">camelize</a>&nbsp;&nbsp;
+      <a href="#M000013">disabled?</a>&nbsp;&nbsp;
+      <a href="#M000016">do_config!</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">action</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get the <a href="AssitConfig.html#M000014">action</a> for failed assertions
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/assit_config.rb, line 43</span>
+43:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">action</span>
+44:     <span class="ruby-ivar">@@assit_action_object</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">begin</span>
+45:       <span class="ruby-identifier">action_name</span> = <span class="ruby-node">&quot;#{@assit_action.to_s.downcase}_action&quot;</span>
+46:       
+47:       <span class="ruby-comment cmt"># require the action's file</span>
+48:       <span class="ruby-identifier">require</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'assit'</span>, <span class="ruby-value str">'actions'</span>, <span class="ruby-identifier">action_name</span>)
+49:       
+50:       <span class="ruby-comment cmt"># Get the class of the widget and check, just to be sure</span>
+51:       <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Assit</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">camelize</span>(<span class="ruby-identifier">action_name</span>))
+52:       <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>, <span class="ruby-value str">&quot;Action class does not exist&quot;</span>) <span class="ruby-keyword kw">unless</span>(<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Class</span>))
+53:       
+54:       <span class="ruby-comment cmt"># Create the new widget</span>
+55:       <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>()
+56:     <span class="ruby-keyword kw">end</span>
+57:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">assit_action</span><span class="method-args">(action)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the <a href="AssitConfig.html#M000014">action</a> for failed
+assertions. This will create the AssitAction object that can be used by the
+framework
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/assit_config.rb, line 62</span>
+62:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">assit_action</span>(<span class="ruby-identifier">action</span>)
+63:     <span class="ruby-ivar">@assit_action</span> = <span class="ruby-identifier">action</span>.<span class="ruby-identifier">to_sym</span>
+64:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">assit_disabled</span><span class="method-args">(disable)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the &quot;disable&quot; flag
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/assit_config.rb, line 32</span>
+32:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">assit_disabled</span>(<span class="ruby-identifier">disable</span>)
+33:     <span class="ruby-ivar">@assit_disabled</span> = <span class="ruby-identifier">disable</span>
+34:     <span class="ruby-ivar">@assit_disabled_conf</span> = <span class="ruby-keyword kw">true</span>
+35:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">disabled?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Gets the &quot;disable&quot; flag
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/assit_config.rb, line 38</span>
+38:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">disabled?</span>
+39:     <span class="ruby-ivar">@assit_disabled</span>
+40:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="#M000016" class="method-signature">
+          <span class="method-name">do_config!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets up the <a href="Assit.html">Assit</a> configuration parameters
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/assit_config.rb, line 67</span>
+67:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">do_config!</span>
+68:     <span class="ruby-comment cmt"># Try to load the configuration</span>
+69:     <span class="ruby-keyword kw">begin</span>
+70:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'assit_config'</span>
+71:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span>
+72:       <span class="ruby-comment cmt"># Fail silently, we don't care if there is no config file</span>
+73:     <span class="ruby-keyword kw">end</span>
+74:     
+75:     <span class="ruby-comment cmt"># Check for the environment variables. They can overwrite the </span>
+76:     <span class="ruby-comment cmt"># config file variables.</span>
+77:     <span class="ruby-ivar">@assit_disabled</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'ASSIT_DISABLED'</span>] <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-constant">ENV</span>[<span class="ruby-value str">'ASSIT_DISABLED'</span>].<span class="ruby-identifier">downcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span> <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'ASSIT_DISABLED'</span>].<span class="ruby-identifier">downcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'yes'</span>) 
+78:     <span class="ruby-ivar">@assit_disabled_conf</span> <span class="ruby-operator">||=</span> (<span class="ruby-constant">ENV</span>[<span class="ruby-value str">'ASSIT_DISABLED'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>)
+79:     <span class="ruby-ivar">@assit_action</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'ASSIT_ACTION'</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'ASSIT_ACTION'</span>].<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">to_sym</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+80:     
+81:     <span class="ruby-comment cmt"># If still not configured, use the auto-config</span>
+82:     <span class="ruby-ivar">@assit_disabled</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">auto_disable</span> <span class="ruby-keyword kw">unless</span>(<span class="ruby-ivar">@assit_disabled_conf</span>)
+83:     <span class="ruby-ivar">@assit_action</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">auto_action</span>
+84:     
+85:     <span class="ruby-comment cmt"># Call the action one time to create and load it</span>
+86:     <span class="ruby-identifier">action</span>
+87:     
+88:     <span class="ruby-comment cmt"># return true</span>
+89:     <span class="ruby-keyword kw">true</span>
+90:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Class methods</h3>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="#M000017" class="method-signature">
+          <span class="method-name">auto_action</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Used to auto-configure the <a href="AssitConfig.html#M000014">action</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/assit_config.rb, line 95</span>
+ 95:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">auto_action</span>
+ 96:     <span class="ruby-comment cmt"># Raise if the debug mode is set or rails is in test or development</span>
+ 97:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">$DEBUG</span> <span class="ruby-operator">||</span> (<span class="ruby-constant">ENV</span>[<span class="ruby-value str">'RAILS_ENV'</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'RAILS_ENV'</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">'production'</span>))
+ 98:       <span class="ruby-identifier">:raise</span>
+ 99:     <span class="ruby-keyword kw">else</span>
+100:       <span class="ruby-identifier">:console</span>
+101:     <span class="ruby-keyword kw">end</span>
+102:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="#M000018" class="method-signature">
+          <span class="method-name">auto_disable</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Used to auto-configure the &quot;disable&quot; flag
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/assit_config.rb, line 105</span>
+105:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">auto_disable</span>
+106:     <span class="ruby-comment cmt"># In Rails production we auto-disable</span>
+107:     (<span class="ruby-constant">ENV</span>[<span class="ruby-value str">'RAILS_ENV'</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'RAILS_ENV'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'production'</span>)
+108:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+          <a href="#M000019" class="method-signature">
+          <span class="method-name">camelize</span><span class="method-args">(lower_case_and_underscored_word, first_letter_in_uppercase = true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Stolen from Rails ;-)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000019-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/assit_config.rb, line 111</span>
+111:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">camelize</span>(<span class="ruby-identifier">lower_case_and_underscored_word</span>, <span class="ruby-identifier">first_letter_in_uppercase</span> = <span class="ruby-keyword kw">true</span>)
+112:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">first_letter_in_uppercase</span>
+113:       <span class="ruby-identifier">lower_case_and_underscored_word</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\/(.?)/</span>) { <span class="ruby-value str">&quot;::&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">upcase</span> }.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/(^|_)(.)/</span>) { <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">upcase</span> }
+114:     <span class="ruby-keyword kw">else</span>
+115:       <span class="ruby-identifier">lower_case_and_underscored_word</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">camelize</span>(<span class="ruby-identifier">lower_case_and_underscored_word</span>)[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+116:     <span class="ruby-keyword kw">end</span>
+117:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
